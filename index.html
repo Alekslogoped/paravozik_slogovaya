@@ -351,6 +351,17 @@ dialog summary { cursor: pointer; font-weight: 800; }
   .train { max-width: min(930px, 151svh); }
   .train[data-level="2"] { max-width: min(1120px, 190svh); }
 }
+:root:is(:fullscreen, .game-expanded) .game {
+  width: 100%;
+  margin: 0;
+}
+:root:is(:fullscreen, .game-expanded) .scene {
+  min-height: 100vh;
+  min-height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .snowfall::before, .snowfall::after { animation: none; }
@@ -516,6 +527,7 @@ const nextLevel = document.querySelector("#next-level");
 const rules = document.querySelector("#rules");
 const fullscreenButton = document.querySelector("#fullscreen-button");
 const fullscreenLabel = document.querySelector("#fullscreen-label");
+const page = document.documentElement;
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
 let queue = [];
@@ -739,6 +751,11 @@ for (const wagon of wagons) {
   wagon.addEventListener("animationend", () => wagon.classList.remove("correct", "incorrect"));
 }
 document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && !rules.open && page.classList.contains("game-expanded")) {
+    page.classList.remove("game-expanded");
+    updateFullscreenLabel();
+    return;
+  }
   if (rules.open || finish.hidden === false || event.altKey || event.ctrlKey || event.metaKey || event.repeat) return;
   const wagon = { "1": wagons[0], "2": wagons[1], "3": wagons[2] }[event.key];
   if (!wagon || wagon.hidden) return;
@@ -762,18 +779,33 @@ for (const button of levelButtons) {
   });
 }
 document.querySelector("#rules-button").addEventListener("click", () => rules.showModal());
-fullscreenButton.hidden = !document.fullscreenEnabled;
+function updateFullscreenLabel() {
+  const expanded = document.fullscreenElement || page.classList.contains("game-expanded");
+  fullscreenLabel.textContent = expanded ? "Выйти из полного экрана" : "Во весь экран";
+}
+
 fullscreenButton.addEventListener("click", async () => {
-  try {
-    if (document.fullscreenElement) await document.exitFullscreen();
-    else await document.documentElement.requestFullscreen();
-  } catch {
-    say("Полноэкранный режим недоступен.");
+  if (document.fullscreenElement) {
+    try {
+      await document.exitFullscreen();
+    } catch {
+      say("Не удалось выйти из полноэкранного режима.");
+    }
+    return;
   }
+  const expanded = page.classList.contains("game-expanded");
+  if (!expanded && document.fullscreenEnabled) {
+    try {
+      await page.requestFullscreen();
+      return;
+    } catch {
+      // Some browsers and embeds can only enlarge the game inside the viewport.
+    }
+  }
+  page.classList.toggle("game-expanded", !expanded);
+  updateFullscreenLabel();
 });
-document.addEventListener("fullscreenchange", () => {
-  fullscreenLabel.textContent = document.fullscreenElement ? "Выйти из полного экрана" : "Во весь экран";
-});
+document.addEventListener("fullscreenchange", updateFullscreenLabel);
 
 startGame();
 
