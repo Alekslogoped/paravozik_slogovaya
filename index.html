@@ -140,15 +140,15 @@ button:focus-visible, a:focus-visible, summary:focus-visible {
 .train {
   position: relative;
   z-index: 1;
-  width: 94%;
-  max-width: 1000px;
+  width: 97.5%;
+  max-width: 1090px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: .95fr 1fr 1fr;
   gap: clamp(4px, 1vw, 12px);
   align-items: end;
 }
-.train[data-level="2"] { grid-template-columns: .95fr 1fr 1fr 1fr; max-width: 1190px; }
+.train[data-level="2"] { grid-template-columns: .95fr 1fr 1fr 1fr; max-width: 1280px; }
 .track {
   position: absolute;
   height: clamp(18px, 3vw, 34px);
@@ -201,7 +201,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible {
 .wagon:focus-visible { outline-color: #173c54; }
 .wagon-body {
   position: absolute;
-  inset: 20% 12% 26%;
+  inset: 18% 11% 24%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,17 +224,16 @@ button:focus-visible, a:focus-visible, summary:focus-visible {
 .windows {
   display: grid;
   grid-template-columns: repeat(var(--seats, 4), minmax(0, 1fr));
-  gap: 5%;
+  gap: clamp(2px, .6vw, 8px);
   width: 100%;
-  max-width: 210px;
   justify-items: center;
 }
 .windows i {
   display: grid;
   place-items: center;
   width: 100%;
-  max-width: 38px;
-  aspect-ratio: 1.12;
+  max-width: 50px;
+  aspect-ratio: 1.04;
   background: linear-gradient(135deg, #fff9e0 0 38%, #e7dcc0 39% 59%, #e7d2a7 60% 100%);
   border: 2px solid var(--trim);
   border-radius: 6px;
@@ -334,22 +333,23 @@ dialog summary { cursor: pointer; font-weight: 800; }
   .platform { padding-top: 19px; }
   .train { grid-template-columns: .84fr 1fr 1fr; }
   .train[data-level="2"] { grid-template-columns: .84fr 1fr 1fr 1fr; }
-  .wagon-body { inset-inline: 10%; gap: 1px; }
+  .wagon-body { inset-inline: 9%; gap: 1px; }
   .wagon-body strong { min-width: 65%; padding: 0 2px; border-radius: 4px; }
-  .windows { gap: 4%; }
   .windows i { border-width: 1px; border-radius: 4px; }
 }
 @media (min-width: 601px) and (max-height: 620px) {
   .game { width: calc(100% - 16px); margin-block: 8px; }
-  .scene { --picture-size: clamp(93px, 21svh, 140px); min-height: max(405px, calc(100svh - 16px)); }
-  .toolbar { padding-top: 10px; }
-  .game-top { padding-top: 8px; }
-  .platform { padding-top: 12px; }
+  .scene { --picture-size: clamp(85px, 20svh, 132px); min-height: max(405px, calc(100svh - 16px)); }
+  .toolbar { padding-top: 8px; }
+  .game-top { padding-top: 6px; }
+  .platform { padding-top: 8px; }
   .card-area { width: 196px; }
-  .railway { --floor-gap: 26px; }
+  .word-toggle { min-height: 34px; margin-top: 7px; }
+  .feedback { min-height: 24px; margin-top: 4px; padding-block: 2px; font-size: .85rem; }
+  .railway { --floor-gap: 26px; padding-top: 6px; }
   .track { height: 22px; }
-  .train { max-width: min(880px, 142svh); }
-  .train[data-level="2"] { max-width: min(1060px, 181svh); }
+  .train { max-width: min(930px, 151svh); }
+  .train[data-level="2"] { max-width: min(1120px, 190svh); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
