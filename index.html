@@ -140,15 +140,15 @@ button:focus-visible, a:focus-visible, summary:focus-visible {
 .train {
   position: relative;
   z-index: 1;
-  width: 97.5%;
-  max-width: 1090px;
+  width: 98.5%;
+  max-width: 1180px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: .95fr 1fr 1fr;
   gap: clamp(4px, 1vw, 12px);
   align-items: end;
 }
-.train[data-level="2"] { grid-template-columns: .95fr 1fr 1fr 1fr; max-width: 1280px; }
+.train[data-level="2"] { grid-template-columns: .95fr 1fr 1fr 1fr; max-width: 1380px; }
 .track {
   position: absolute;
   height: clamp(18px, 3vw, 34px);
@@ -348,8 +348,8 @@ dialog summary { cursor: pointer; font-weight: 800; }
   .feedback { min-height: 24px; margin-top: 4px; padding-block: 2px; font-size: .85rem; }
   .railway { --floor-gap: 26px; padding-top: 6px; }
   .track { height: 22px; }
-  .train { max-width: min(930px, 151svh); }
-  .train[data-level="2"] { max-width: min(1120px, 190svh); }
+  .train { max-width: min(950px, 153svh); }
+  .train[data-level="2"] { max-width: min(1150px, 195svh); }
 }
 :root:is(:fullscreen, .game-expanded) .game {
   width: 100%;
@@ -361,6 +361,10 @@ dialog summary { cursor: pointer; font-weight: 800; }
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
+@media (min-height: 621px) {
+  :root:is(:fullscreen, .game-expanded) .train { max-width: 1380px; }
+  :root:is(:fullscreen, .game-expanded) .train[data-level="2"] { max-width: 1550px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
